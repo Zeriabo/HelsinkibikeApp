@@ -20,7 +20,7 @@ public class CSVService {
 
 	  public void save(MultipartFile file) throws ParseException {
 		    try {
-		      List<Journey> journeys = CSVHelper.csvToTutorials(file.getInputStream());
+		      List<Journey> journeys = CSVHelper.csvToJourneys(file.getInputStream());
 		      journeyRepository.saveAll(journeys);
 		    } catch (IOException e) {
 		      throw new RuntimeException("fail to store csv data: " + e.getMessage());

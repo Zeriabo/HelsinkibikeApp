@@ -32,7 +32,7 @@ public class CSVHelper {
 
 	    return true;
 	  }
-	  public static List<Journey> csvToTutorials(InputStream is) throws ParseException {
+	  public static List<Journey> csvToJourneys(InputStream is) throws ParseException {
 		    try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 		        CSVParser csvParser = new CSVParser(fileReader,
 		            CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
