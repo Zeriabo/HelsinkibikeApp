@@ -40,7 +40,6 @@ public class CSVHelper {
 		      List<Journey> tutorials = new ArrayList<Journey>();
 
 		      Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-
 		      for (CSVRecord csvRecord : csvRecords) {
 		    	  Journey journey = new Journey();
                  journey.setArrival(formatter.parse(csvRecord.get("Return")));
