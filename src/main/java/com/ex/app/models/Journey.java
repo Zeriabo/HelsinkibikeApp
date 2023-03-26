@@ -1,5 +1,6 @@
 package com.ex.app.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ public class Journey {
 	{
 		
 	}
-	public Journey(Long id,Date departure,Date arrival, int departureStationId,int arrivalStationId,
+	public Journey(Long id,LocalDateTime departure,LocalDateTime arrival, int departureStationId,int arrivalStationId,
 			String arrivalStationName,	String departureStationName,int coveredDistance,int duration)
 	{
 		this.id=id;
@@ -34,16 +35,16 @@ public class Journey {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getDeparture() {
+	public LocalDateTime getDeparture() {
 		return departure;
 	}
-	public void setDeparture(Date departure) {
+	public void setDeparture(LocalDateTime departure) {
 		this.departure = departure;
 	}
-	public Date getArrival() {
+	public LocalDateTime getArrival() {
 		return arrival;
 	}
-	public void setArrival(Date arrival) {
+	public void setArrival(LocalDateTime arrival) {
 		this.arrival = arrival;
 	}
 	public int getDepartureStationId() {
@@ -70,27 +71,27 @@ public class Journey {
 	public void setDepartureStationName(String departureStationName) {
 		this.departureStationName = departureStationName;
 	}
-	public int getCoveredDistance() {
+	public double getCoveredDistance() {
 		return coveredDistance;
 	}
-	public void setCoveredDistance(int coveredDistance) {
+	public void setCoveredDistance(double coveredDistance) {
 		this.coveredDistance = coveredDistance;
 	}
-	public int getDuration() {
+	public double getDuration() {
 		return duration;
 	}
-	public void setDuration(int duration) {
+	public void setDuration(double duration) {
 		this.duration = duration;
 	}
 	
 	private @Id @GeneratedValue  Long  id;
-	private Date departure;
-	private Date arrival;
+	private LocalDateTime departure;
+	private LocalDateTime arrival;
 	private int departureStationId;
 	private int arrivalStationId;
     private String arrivalStationName;
     private String departureStationName;
-    private int coveredDistance;
-    private int duration;
+    private double coveredDistance;
+    private double duration;
 	
 }

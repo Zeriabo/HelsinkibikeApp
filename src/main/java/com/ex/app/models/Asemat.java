@@ -66,9 +66,41 @@ public class Asemat {
 		this.y = y;
 	}
 	
+	public int getAsemaId() {
+		return asemaId;
+	}
+	public void setAsemaId(int asemaId) {
+		this.asemaId = asemaId;
+	}
+
+	public String getAdres() {
+		return adres;
+	}
+	public void setAdres(String adres) {
+		this.adres = adres;
+	}
+
+	public String getNamn() {
+		return namn;
+	}
+	public void setNamn(String namn) {
+		this.namn = namn;
+	}
+
+	public String getNimi() {
+		return nimi;
+	}
+	public void setNimi(String nimi) {
+		this.nimi = nimi;
+	}
+
 	private @Id @GeneratedValue  Long id;
+	private int  asemaId;
 	private String name;
+	private String namn;
+	private String nimi;
 	private String osoite;
+	private String adres;
     private String kaupunki;
     private String stad;
     private String Operator;
