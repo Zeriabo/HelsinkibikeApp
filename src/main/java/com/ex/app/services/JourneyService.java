@@ -1,5 +1,6 @@
 package com.ex.app.services;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,4 +39,19 @@ public class JourneyService {
 		return pagedResult;
 	}
 
+	public Page<Journey> getAllJourneysSearchedByDeparture( String search) {
+		
+		PageRequest pr = PageRequest.of(1, 5);
+		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByDeparture(search, pr);
+
+		return pagedResult;
+	}
+	
+public Page<Journey> getAllJourneysSearchedByArrival( String search) {
+		
+		PageRequest pr = PageRequest.of(1, 5);
+		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByArrival(search, pr);
+
+		return pagedResult;
+	}
 }
