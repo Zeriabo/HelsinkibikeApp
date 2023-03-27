@@ -27,6 +27,7 @@ Page<Asemat> searchAsematByCapacity(int search,PageRequest pageable);
 
 
 
+
 }
 
 

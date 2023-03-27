@@ -2,6 +2,7 @@ package com.ex.app.controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,13 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.ex.app.helper.CSVHelper;
 import com.ex.app.models.Asemat;
-import com.ex.app.models.Journey;
 import com.ex.app.models.ResponseMessage;
-import com.ex.app.repository.JourneyRepository;
 import com.ex.app.services.AsemaService;
 import com.ex.app.services.CSVService;
 
@@ -61,7 +57,7 @@ public class AsemaController {
 
 		try {
 			
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllJourneys());
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllStations());
 		} catch (Exception e) {
 		
 			throw e;
@@ -69,13 +65,42 @@ public class AsemaController {
 
 	}
 	@GetMapping("/search_capacity")
-	public ResponseEntity<Page<Asemat>> getSearchByDepartureJourneys(@RequestParam String search) {
+	public ResponseEntity<Page<Asemat>> getStationsByCapacity(@RequestParam String search) {
 
 
 		try {
 			int capacity = Integer.parseInt(search);
 				
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllJourneysSearchedByCapacity(capacity));
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllStationsJourneysSearchedByCapacity(capacity));
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
+	@GetMapping("/single")
+	public ResponseEntity<List<Object>> getSingleStation(@RequestParam String search) {
+
+
+		try {
+			int id = Integer.parseInt(search);
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getStation(id));
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
+	
+	@GetMapping("/location")
+	public ResponseEntity<Object> getStationLocation(@RequestParam String idParam) {
+
+
+		try {
+			int id = Integer.parseInt(idParam);
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getStationLocation(id));
 		} catch (Exception e) {
 		
 			throw e;

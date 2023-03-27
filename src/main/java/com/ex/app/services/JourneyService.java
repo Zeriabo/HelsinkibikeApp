@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.ex.app.models.Journey;
-import com.ex.app.repository.AsematRepository;
 import com.ex.app.repository.JourneyPaginationRepository;
 import com.ex.app.repository.JourneyRepository;
 
@@ -17,8 +16,7 @@ import com.ex.app.repository.JourneyRepository;
 public class JourneyService {
 	@Autowired
 	JourneyRepository journeyRepository;
-	@Autowired
-	AsematRepository asematRepository;
+	
 	@Autowired
 	JourneyPaginationRepository journeyPaginationRepsitory;
 
