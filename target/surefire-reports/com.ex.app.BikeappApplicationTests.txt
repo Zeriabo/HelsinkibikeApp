@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.ex.app.BikeappApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.273 s - in com.ex.app.BikeappApplicationTests
