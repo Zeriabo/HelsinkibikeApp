@@ -66,4 +66,11 @@ public Object getAVGArrivalDistance( String search) {
 
 	return pagedResult;
 }
+
+public Journey createJourney( Journey journey) {
+	
+	Journey newJourney = journeyRepository.save(journey);
+
+	return newJourney;
+}
 }

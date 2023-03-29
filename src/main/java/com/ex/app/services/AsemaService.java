@@ -92,14 +92,15 @@ public class AsemaService {
 	
 	}
 	
-	public boolean createAsema(Asemat asema) {
+	public Asemat createAsema(Asemat asema) {
+		try {
 		 Asemat result = asematRepository.save(asema);
-		 if(result instanceof Asemat)
-		 {
-			 return true;
-		 }else {
-			 return false;
-		 }
+		 return result;
+		}catch(Exception e)
+		{
+			throw e;
+		}
+		
 	
 	}
 

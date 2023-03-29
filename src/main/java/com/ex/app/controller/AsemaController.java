@@ -33,7 +33,7 @@ public class AsemaController {
 
 
 	@PostMapping("/")
-	public ResponseEntity<Boolean> createAsema(@RequestBody Asemat  asema) {
+	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) {
 
 		try {
 			
