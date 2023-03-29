@@ -64,11 +64,42 @@ public class AsemaService {
 
 		return result;
 	}
+	
+	public List<Object> getSngleStation(long id) {
+
+		List<Object> result = asematRepository.getSingleStationInfo(id);
+
+		return result;
+	}
 
 	public Object getStationLocation(int id) {
 		Object result = asematRepository.getLocation(id);
 
 		return result;
+	
+	}
+	
+	public Object getMostFiveReturn() {
+		Object result = asematRepository.getMostFiveReturn();
+
+		return result;
+	
+	}
+	
+	public Object getMostFiveDeparture() {
+		List<Object> result = asematRepository.getMostFiveDeparture();
+		return result;
+	
+	}
+	
+	public boolean createAsema(Asemat asema) {
+		 Asemat result = asematRepository.save(asema);
+		 if(result instanceof Asemat)
+		 {
+			 return true;
+		 }else {
+			 return false;
+		 }
 	
 	}
 

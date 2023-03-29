@@ -20,62 +20,85 @@ import com.ex.app.services.JourneyService;
 @RestController
 public class JourneyController {
 
-
 	@Autowired
-    JourneyService journeyService;
+	JourneyService journeyService;
 
 	@GetMapping("/")
-	public ResponseEntity<List<Journey>> getJourneys() {
-
+	public ResponseEntity<Page<Journey>> getJourneys() {
 
 		try {
-			
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneys());
+
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy("id"));
 		} catch (Exception e) {
-		
+
 			throw e;
 		}
 
 	}
-	
+
 	@GetMapping("/sorted")
 	public ResponseEntity<Page<Journey>> getJourneysSorted(@RequestParam String sortedBy) {
 
-
 		try {
-				
+
 			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy(sortedBy));
 		} catch (Exception e) {
-		
+
 			throw e;
 		}
 
 	}
-	
+
 	@GetMapping("/search_departure")
 	public ResponseEntity<Page<Journey>> getSearchByDepartureJourneys(@RequestParam String search) {
 
-
 		try {
-				
+
 			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByDeparture(search));
 		} catch (Exception e) {
-		
+
 			throw e;
 		}
 
 	}
-	
-	
-	@GetMapping("/search_arrival")
-	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam String search) {
 
+	@GetMapping("/search_arrival")
+	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam String idParam) {
+
+		int id = Integer.parseInt(idParam);
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
+		} catch (Exception e) {
+
+			throw e;
+		}
+
+	}
+
+	@GetMapping("/avg_departure")
+	public ResponseEntity<Page<Journey>> getAVGDeparture(@RequestParam String idParam) {
+		int id = Integer.parseInt(idParam);
 
 		try {
-				
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(search));
+
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
 		} catch (Exception e) {
-		
+
+			throw e;
+		}
+
+	}
+
+	@GetMapping("/avg_arrival")
+	public ResponseEntity<Page<Journey>> getAVGArrival(@RequestParam String idParam) {
+		int id = Integer.parseInt(idParam);
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
+		} catch (Exception e) {
+
 			throw e;
 		}
 

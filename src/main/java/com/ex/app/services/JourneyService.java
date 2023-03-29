@@ -45,11 +45,25 @@ public class JourneyService {
 		return pagedResult;
 	}
 	
-public Page<Journey> getAllJourneysSearchedByArrival( String search) {
+public Page<Journey> getAllJourneysSearchedByArrival( int search) {
 		
 		PageRequest pr = PageRequest.of(1, 5);
 		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByArrival(search, pr);
 
 		return pagedResult;
 	}
+
+public Object getAVGDepartureDistance( String search) {
+	
+	Object pagedResult = journeyRepository.getAverageDepartureDistance(search);
+
+	return pagedResult;
+}
+
+public Object getAVGArrivalDistance( String search) {
+	
+	Object pagedResult = journeyRepository.getAverageArrivalDistance(search);
+
+	return pagedResult;
+}
 }

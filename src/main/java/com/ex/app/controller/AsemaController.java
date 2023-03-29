@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,19 @@ public class AsemaController {
 	@Autowired
 	AsemaService asemaService;
 
+
+	@PostMapping("/")
+	public ResponseEntity<Boolean> createAsema(@RequestBody Asemat  asema) {
+
+		try {
+			
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.createAsema(asema));
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
 	@PostMapping("/upload")
 	public ResponseEntity<ResponseMessage> uploadFile() {
 		String message = "";
@@ -52,7 +66,7 @@ public class AsemaController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<Page<Asemat>> getJourneys() {
+	public ResponseEntity<Page<Asemat>> getStations() {
 
 
 		try {
@@ -79,13 +93,13 @@ public class AsemaController {
 
 	}
 	@GetMapping("/single")
-	public ResponseEntity<List<Object>> getSingleStation(@RequestParam String search) {
+	public ResponseEntity<List<Object>> getSingleStation(@RequestParam String idParam) {
 
 
 		try {
-			int id = Integer.parseInt(search);
+			int id = Integer.parseInt(idParam);
 
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getStation(id));
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getSngleStation(id));
 		} catch (Exception e) {
 		
 			throw e;
@@ -107,6 +121,36 @@ public class AsemaController {
 		}
 
 	}
+	@GetMapping("/fivereturn")
+	public ResponseEntity<Object> getMostFiveReturn() {
+
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveReturn());
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
+	
+	@GetMapping("/fivedeparture")
+	public ResponseEntity<Object> getMostFiveDeparture() {
+
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveDeparture());
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
+	
+
+
 	
 
 }
