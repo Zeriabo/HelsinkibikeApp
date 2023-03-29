@@ -1,5 +1,6 @@
 package com.ex.app.models;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -7,8 +8,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity
-public class Journey {
+public class Journey implements Serializable {
 
 	public Journey()
 	{

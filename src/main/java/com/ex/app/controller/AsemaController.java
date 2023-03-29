@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ex.app.exceptions.InputException;
 import com.ex.app.models.Asemat;
 import com.ex.app.models.ResponseMessage;
 import com.ex.app.services.AsemaService;
@@ -33,8 +35,12 @@ public class AsemaController {
 
 
 	@PostMapping("/")
-	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) {
-
+	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) throws InputException {
+    if(asema.getAdres()==null  || asema.getKaupunki()==null || asema.getName()==null ||asema.getNamn()==null || asema.getNimi() ==null 
+    		|| asema.getOperator()==null || asema.getOsoite()== null ||asema.getStad()==null )
+    {
+    	throw new InputException("Wrong input!");
+    }
 		try {
 			
 			return ResponseEntity.status(HttpStatus.OK).body(asemaService.createAsema(asema));
@@ -51,7 +57,7 @@ public class AsemaController {
 		try {
 			File file = new File("src/main/resources/Helsingin_ja_Espoon_kaupunkipy_asemat_avoin.csv");
 	
-
+       
 			fileService.saveAsemat(file);
 
 		

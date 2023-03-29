@@ -149,8 +149,8 @@ public class CSVHelper {
 			for (CSVRecord csvRecord : csvRecords) {
 				Asemat asema = new Asemat();
 				try {
-
-					asema.setAsemaId(Integer.parseInt(csvRecord.get("ID")));
+                    asema.setFid(Long.parseLong(csvRecord.get(0)));
+					asema.setId(Long.parseLong(csvRecord.get("ID")));
 					asema.setKapasiteet(Integer.parseInt(csvRecord.get("Kapasiteet")));
 					asema.setKaupunki(csvRecord.get("Kaupunki"));
 					asema.setOsoite(csvRecord.get("Osoite"));

@@ -1,15 +1,26 @@
 package com.ex.app.models;
 
+import java.io.Serializable;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+@SuppressWarnings("serial")
 @Entity
-public class Asemat {
+public class Asemat implements Serializable{
 
 	public Asemat()
 	{
 		
+	}
+
+	public Long getFid() {
+		return fid;
+	}
+	public void setFid(Long fid) {
+		this.fid = fid;
 	}
 	public Long getId() {
 		return id;
@@ -66,11 +77,11 @@ public class Asemat {
 		this.y = y;
 	}
 	
-	public int getAsemaId() {
-		return asemaId;
+	public Long getAsemaId() {
+		return id;
 	}
-	public void setAsemaId(int asemaId) {
-		this.asemaId = asemaId;
+	public void setAsemaId(Long asemaId) {
+		this.id = asemaId;
 	}
 
 	public String getAdres() {
@@ -94,8 +105,9 @@ public class Asemat {
 		this.nimi = nimi;
 	}
 
-	private @Id @GeneratedValue  Long id;
-	private int  asemaId;
+
+	private @Id @GeneratedValue  Long fid;
+	private @Column(unique=true) Long   id;
 	private String name;
 	private String namn;
 	private String nimi;
