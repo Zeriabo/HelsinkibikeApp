@@ -124,11 +124,6 @@ public class CSVHelper {
 					}
 				} catch (Exception ex) {
 					System.out.println(ex.getMessage());
-//					System.out.println(csvRecord.get(0));
-//					System.out.println(csvRecord.get(1));
-//					System.out.println(csvRecord.get(0).length()<11);
-//							System.out.println(csvRecord.get(1).length()<11);
-//					System.out.println(csvRecord.getRecordNumber());
 				}
 			}
 			return journeys;

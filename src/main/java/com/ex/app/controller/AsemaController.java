@@ -33,7 +33,10 @@ public class AsemaController {
 	@Autowired
 	AsemaService asemaService;
 
-
+public AsemaController()
+{
+	
+}
 	@PostMapping("/")
 	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) throws InputException {
     if(asema.getAdres()==null  || asema.getKaupunki()==null || asema.getName()==null ||asema.getNamn()==null || asema.getNimi() ==null 

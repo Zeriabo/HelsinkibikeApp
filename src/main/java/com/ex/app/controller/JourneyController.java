@@ -1,5 +1,6 @@
 package com.ex.app.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ex.app.models.Journey;
-
+import com.ex.app.models.ResponseMessage;
+import com.ex.app.services.CSVService;
 import com.ex.app.services.JourneyService;
 
 @CrossOrigin("http://localhost:8080")
@@ -22,6 +24,8 @@ import com.ex.app.services.JourneyService;
 @RestController
 public class JourneyController {
 
+	@Autowired
+	CSVService fileService;
 	@Autowired
 	JourneyService journeyService;
 
@@ -105,6 +109,29 @@ public class JourneyController {
 		}
 
 	}
+	@PostMapping("/upload")
+	public ResponseEntity<ResponseMessage> uploadFile() {
+		String message = "";
+
+		try {
+			File file = new File("src/main/resources/2021-05.csv");
+			File file2 = new File("src/main/resources/2021-06.csv");
+			File file3 = new File("src/main/resources/2021-07.csv");
+       
+			fileService.saveJourneys(file);
+			fileService.saveJourneys(file2);
+			fileService.saveJourneys(file3);
+
+		
+
+			message = "Uploaded the file successfully: " + file.getName();
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+		} catch (Exception e) {
+			message = "Could not upload the file  !";
+			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+		}
+
+	}
 	
 	@PostMapping("/")
 	public ResponseEntity<Journey> createJourney( @RequestBody Journey newJourney  ) {
@@ -118,5 +145,6 @@ public class JourneyController {
 		}
 
 	}
+	
 
 }
