@@ -1,15 +1,12 @@
 package com.ex.app.repository;
 
-import java.awt.print.Pageable;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
-
 import com.ex.app.models.Asemat;
-import com.ex.app.models.Journey;
+
 
 public interface AsemaPaginationRepository extends PagingAndSortingRepository<Asemat,Long> {
 

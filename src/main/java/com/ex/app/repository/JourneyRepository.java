@@ -13,10 +13,10 @@ public interface JourneyRepository extends JpaRepository<Journey,Long> {
 	@Query(value="SELECT AVG(covered_distance) as AVG_DEPARTURE "
 			+ "FROM public.journey "
 			+ "where departure_station_id=?1", nativeQuery = true)
-	Object getAverageDepartureDistance(String id);
+	Object getAverageDepartureDistance(int id);
 	
 	@Query(value="SELECT AVG(covered_distance) as AVG_ARRIVAL "
 			+ "FROM public.journey "
 			+ "where arrival_station_id=?1", nativeQuery = true)
-	Object getAverageArrivalDistance(String id);
+	Object getAverageArrivalDistance(int id);
 }

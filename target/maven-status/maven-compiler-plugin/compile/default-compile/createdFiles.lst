@@ -1,9 +1,12 @@
 com/ex/app/services/JourneyService.class
 com/ex/app/models/ResponseMessage.class
+com/ex/app/services/AsemaService.class
 com/ex/app/BikeappApplication.class
 com/ex/app/controller/JourneyController.class
 com/ex/app/services/CSVService.class
 com/ex/app/controller/AsemaController.class
+com/ex/app/exceptions/InputException.class
+com/ex/app/repository/AsemaPaginationRepository.class
 com/ex/app/models/Journey.class
 com/ex/app/repository/JourneyPaginationRepository.class
 com/ex/app/repository/AsematRepository.class

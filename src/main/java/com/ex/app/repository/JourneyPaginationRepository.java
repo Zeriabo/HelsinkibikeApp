@@ -17,7 +17,7 @@ public interface JourneyPaginationRepository extends PagingAndSortingRepository<
 
 
 @Query(value = "SELECT * FROM public.journey j WHERE j.arrival_station_name = ?1", nativeQuery = true)
-Page<Journey> searchJourneysByArrival(int id,PageRequest pageable);
+Page<Journey> searchJourneysByArrival(String arrival,PageRequest pageable);
 
 
 

@@ -45,7 +45,7 @@ public class JourneyService {
 		return pagedResult;
 	}
 	
-public Page<Journey> getAllJourneysSearchedByArrival( int search) {
+public Page<Journey> getAllJourneysSearchedByArrival( String search) {
 		
 		PageRequest pr = PageRequest.of(1, 5);
 		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByArrival(search, pr);
@@ -53,16 +53,17 @@ public Page<Journey> getAllJourneysSearchedByArrival( int search) {
 		return pagedResult;
 	}
 
-public Object getAVGDepartureDistance( String search) {
+public Object getAVGDepartureDistance( int id) {
 	
-	Object pagedResult = journeyRepository.getAverageDepartureDistance(search);
+	Object pagedResult = journeyRepository.getAverageDepartureDistance(id);
 
 	return pagedResult;
 }
 
-public Object getAVGArrivalDistance( String search) {
+public Object getAVGArrivalDistance( int id) {
 	
-	Object pagedResult = journeyRepository.getAverageArrivalDistance(search);
+
+	Object pagedResult = journeyRepository.getAverageArrivalDistance(id);
 
 	return pagedResult;
 }

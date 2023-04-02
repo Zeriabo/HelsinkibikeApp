@@ -69,12 +69,12 @@ public class JourneyController {
 	}
 
 	@GetMapping("/search_arrival")
-	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam String idParam) {
+	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam String search) {
 
-		int id = Integer.parseInt(idParam);
+
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(search));
 		} catch (Exception e) {
 
 			throw e;
@@ -83,12 +83,11 @@ public class JourneyController {
 	}
 
 	@GetMapping("/avg_departure")
-	public ResponseEntity<Page<Journey>> getAVGDeparture(@RequestParam String idParam) {
-		int id = Integer.parseInt(idParam);
-
+	public ResponseEntity<Object> getAVGDeparture(@RequestParam String idParam) {
+		
 		try {
-
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
+			 int id = Integer.parseInt(idParam);
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAVGDepartureDistance(id));
 		} catch (Exception e) {
 
 			throw e;
@@ -97,12 +96,11 @@ public class JourneyController {
 	}
 
 	@GetMapping("/avg_arrival")
-	public ResponseEntity<Page<Journey>> getAVGArrival(@RequestParam String idParam) {
-		int id = Integer.parseInt(idParam);
+	public ResponseEntity<Object> getAVGArrival(@RequestParam String idParam) {
 
 		try {
-
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id));
+			 int id = Integer.parseInt(idParam);
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAVGArrivalDistance(id));
 		} catch (Exception e) {
 
 			throw e;

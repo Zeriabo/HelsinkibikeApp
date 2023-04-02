@@ -1,21 +1,14 @@
 package com.ex.app;
 
-import java.io.File;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import com.ex.app.controller.AsemaController;
 import com.ex.app.controller.JourneyController;
 import com.ex.app.models.Asemat;
 import com.ex.app.models.Journey;
-import com.ex.app.models.ResponseMessage;
-import com.ex.app.services.CSVService;
 
 @SpringBootApplication
 public class BikeappApplication {
