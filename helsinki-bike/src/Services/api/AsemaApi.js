@@ -2,11 +2,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiAsema = createApi({
   reducerPath: "asemaApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/" }), //needs params a number of page
   tagTypes: ["Asema"],
   endpoints: (builder) => ({
     getAsemat: builder.query({
-      query: () => `asema/`,
+      query: (arg) => {
+        console.log("arg: ", arg);
+        return {
+          url: "asema/",
+          params: { page: arg },
+        };
+      },
     }),
     getSingleAsemat: builder.query({
       query: (id) => `/asema/single/` + id,

@@ -1,148 +1,109 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { Pagination } from "@mui/material";
+import { useGetAsematQuery } from "../Services/api/AsemaApi";
+function AsematList() {
+  const [page, setPage] = useState(0);
+  const { data, error, isLoading, isFetching } = useGetAsematQuery(page);
+  const [content, setContent] = useState("");
+  const [empty, setEmpty] = useState(false);
+  const [first, setFirst] = useState({});
+  const [last, setLast] = useState({});
+  const [number, setNumber] = useState(0);
+  const [pageable, setPagable] = useState(true);
+  const [size, setSize] = useState(0);
+  const [sort, setSort] = useState(true);
+  const [totalElements, setTotalElements] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
-export default class AsematList extends Component {
-  constructor(props) {
-    console.log(props.asemat);
-    super(props.asemat);
-    this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-    this.retrieveTutorials = this.retrieveTutorials.bind(this);
-    this.handlePageChange = this.handlePageChange.bind(this);
-    this.handlePageSizeChange = this.handlePageSizeChange.bind(this);
-    this.setActiveTutorial = this.setActiveTutorial.bind(this);
+  const [numberOfElements, setNumberOfElements] = useState(0);
+  const [searchTitle, setsearchTitle] = useState("");
 
-    this.state = {
-      content: props.asemat.content,
-      empty: props.asemat.empty,
-      first: props.asemat.first,
-      last: props.asemat.last,
-      number: props.asemat.number,
-      numberOfElements: props.asemat.numberOfElements,
-      pageable: props.asemat.pageable,
-      size: props.asemat.size,
-      sort: props.asemat.sort,
-      totalElements: props.asemat.totalElements,
-      totalPages: props.asemat.totalPages,
-    };
-  }
+  useEffect(() => {
+    setNumberOfElements(data.numberOfElements);
+    setContent(data.content);
+    setTotalPages(data.totalPages - 1);
+  });
 
-  componentDidMount() {
-    this.retrieveTutorials();
-  }
+  const onChangeSearchTitle = (e) => {
+    setsearchTitle(e.target.value);
+    setContent(data.content);
+  };
 
-  onChangeSearchTitle(e) {
-    const searchTitle = e.target.value;
-
-    this.setState({
-      searchTitle: searchTitle,
-    });
-  }
-
-  getRequestParams(searchTitle, page, pageSize) {
-    let params = {};
-
-    if (searchTitle) {
-      params["title"] = searchTitle;
-    }
-
-    if (page) {
-      params["page"] = page - 1;
-    }
-
-    if (pageSize) {
-      params["size"] = pageSize;
-    }
-
-    return params;
-  }
-
-  retrieveTutorials() {
-    console.log(this.state);
-    const { searchTitle, page, pageSize } = this.state;
-    const params = this.getRequestParams(searchTitle, page, pageSize);
-  }
-
-  handlePageChange(event, value) {
-    this.setState(
-      {
-        page: value,
-      },
-      () => {
-        this.retrieveTutorials();
-      }
-    );
-  }
-  setActiveTutorial(event) {
+  const setActiveTutorial = (event) => {
     console.log(event);
-  }
-  handlePageSizeChange(event) {
-    this.setState(
-      {
-        pageSize: event.target.value,
-        page: 1,
-      },
-      () => {
-        this.retrieveTutorials();
-      }
-    );
-  }
-  render() {
-    return (
-      <div className="list row">
-        <div className="col-md-8">
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search by title"
-              value={this.state.first}
-              onChange={this.onChangeSearchTitle}
-            />
-            <div className="input-group-append">
-              <button
-                className="btn btn-outline-secondary"
-                type="button"
-                onClick={this.retrieveTutorials}
-              >
-                Search
-              </button>
-            </div>
+  };
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
+  const handlePageSizeChange = (event) => {
+    console.log(event);
+    // this.setState(
+    //   {
+    //     pageSize: event.target.value,
+    //     page: this.props.page,
+    //   },
+    //   () => {
+    //     this.retrieveAsemat();
+    //   }
+    // );
+  };
+
+  return (
+    <div className="list row">
+      <div className="col-md-8">
+        <Pagination
+          className="my-asemat"
+          count={totalPages}
+          page={page ? page : 0}
+          siblingCount={1}
+          boundaryCount={1}
+          variant="outlined"
+          shape="rounded"
+          onChange={handlePageChange}
+        />
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Search by title"
+            value={page ? page : 0}
+            onChange={onChangeSearchTitle}
+          />
+          <div className="input-group-append">
+            <button
+              className="btn btn-outline-secondary"
+              type="button"
+              onClick={() => console.log("")}
+            >
+              Search
+            </button>
           </div>
-        </div>
-        <div className="col-md-6">
-          <h4>Tutorials List</h4>
-
-          <div className="mt-3">
-            {"Items per Page: "}
-            <select
-              onChange={this.handlePageSizeChange}
-              value={this.state.totalPages}
-            ></select>
-
-            <div
-              className="my-3"
-              count={this.state.totalElements}
-              page={this.state.content}
-              siblingCount={1}
-              boundaryCount={1}
-              variant="outlined"
-              shape="rounded"
-              onChange={this.handlePageChange}
-            />
-          </div>
-
-          <ul className="list-group">
-            {this.state.content &&
-              this.state.content.map((tutorial, index) => (
-                <li
-                  onClick={() => this.setActiveTutorial(tutorial, index)}
-                  key={index}
-                >
-                  {tutorial.name}
-                </li>
-              ))}
-          </ul>
         </div>
       </div>
-    );
-  }
+      <div className="col-md-6">
+        <h4>Asemat List</h4>
+
+        <div className="mt-3">
+          {"Items per Page: "}
+          <select
+            onChange={handlePageSizeChange}
+            value={numberOfElements}
+          ></select>
+        </div>
+
+        <ul className="list-group">
+          {content &&
+            content.map((tutorial, index) => (
+              <li
+                onClick={() => setActiveTutorial(tutorial, index)}
+                key={index}
+              >
+                {tutorial.name}
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
+export default AsematList;
