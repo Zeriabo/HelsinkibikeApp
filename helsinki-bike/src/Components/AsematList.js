@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
 import { useGetAsematQuery } from "../Services/api/AsemaApi";
+import { useNavigate } from "react-router-dom";
+
 function AsematList() {
   const [page, setPage] = useState(0);
   const { data, error, isLoading, isFetching } = useGetAsematQuery(page);
@@ -14,38 +16,33 @@ function AsematList() {
   const [sort, setSort] = useState(true);
   const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
-  const [numberOfElements, setNumberOfElements] = useState(0);
-  const [searchTitle, setsearchTitle] = useState("");
-
+  const [search, setsearch] = useState("");
+  const navigate = useNavigate();
   useEffect(() => {
-    setNumberOfElements(data.numberOfElements);
+    //setNumberOfElements(data.numberOfElements);
     setContent(data.content);
     setTotalPages(data.totalPages - 1);
-  });
+  }, [page]);
 
   const onChangeSearchTitle = (e) => {
-    setsearchTitle(e.target.value);
-    setContent(data.content);
+    setsearch(e.target.value);
+    const filteredData = data.content.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    setContent(filteredData);
   };
 
   const setActiveTutorial = (event) => {
     console.log(event);
+    navigate("/asema", { state: event });
   };
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+
   const handlePageSizeChange = (event) => {
     console.log(event);
-    // this.setState(
-    //   {
-    //     pageSize: event.target.value,
-    //     page: this.props.page,
-    //   },
-    //   () => {
-    //     this.retrieveAsemat();
-    //   }
-    // );
   };
 
   return (
@@ -66,39 +63,18 @@ function AsematList() {
             type="text"
             className="form-control"
             placeholder="Search by title"
-            value={page ? page : 0}
             onChange={onChangeSearchTitle}
           />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-secondary"
-              type="button"
-              onClick={() => console.log("")}
-            >
-              Search
-            </button>
-          </div>
         </div>
       </div>
       <div className="col-md-6">
         <h4>Asemat List</h4>
 
-        <div className="mt-3">
-          {"Items per Page: "}
-          <select
-            onChange={handlePageSizeChange}
-            value={numberOfElements}
-          ></select>
-        </div>
-
         <ul className="list-group">
           {content &&
-            content.map((tutorial, index) => (
-              <li
-                onClick={() => setActiveTutorial(tutorial, index)}
-                key={index}
-              >
-                {tutorial.name}
+            content.map((asema, index) => (
+              <li onClick={() => setActiveTutorial(asema, index)} key={index}>
+                {asema.name}
               </li>
             ))}
         </ul>
