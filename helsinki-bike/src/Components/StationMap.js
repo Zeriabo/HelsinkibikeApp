@@ -10,15 +10,10 @@ const StationMap = withScriptjs(
   withGoogleMap((props) => {
     const [x, setX] = useState(props.station.x);
     const [y, setY] = useState(props.station.y);
-
     const [map, setMap] = useState(null);
 
     const handleMapLoad = (map) => {
       setMap(map);
-    };
-
-    const handleMarkerClick = (event) => {
-      console.log("Marker clicked:", event.latLng.lat(), event.latLng.lng());
     };
 
     return (
@@ -26,15 +21,14 @@ const StationMap = withScriptjs(
         ref={handleMapLoad}
         defaultZoom={12}
         defaultCenter={{
-          lat: x,
-          lng: y,
+          lat: y,
+          lng: x,
         }}
-        onClick={handleMarkerClick}
       >
         <Marker
           position={{
-            lat: x,
-            lng: y,
+            lat: y,
+            lng: x,
           }}
         />
       </GoogleMap>
