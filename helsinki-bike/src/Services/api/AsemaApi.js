@@ -2,36 +2,36 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiAsema = createApi({
   reducerPath: "asemaApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/" }), //needs params a number of page
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/asema" }),
   tagTypes: ["Asema"],
   endpoints: (builder) => ({
     getAsemat: builder.query({
-      query: (arg) => {
-        console.log("arg: ", arg);
-        return {
-          url: "asema/",
-          params: { page: arg },
-        };
-      },
+      query: () => `/`,
     }),
     getSingleAsemat: builder.query({
-      query: (id) => `/asema/single/` + id,
+      query: (id) => `/single/` + id,
+    }),
+    getTotalDeparture: builder.query({
+      query: (id) => `/totaldeparture?id=` + id,
+    }),
+    getTotalArrival: builder.query({
+      query: (id) => `/totalarrival?id=` + id,
     }),
     getAsematCapacity: builder.query({
-      query: (capacity) => `/asema/` + capacity,
+      query: (capacity) => `/` + capacity,
     }),
     getAsematLocation: builder.query({
-      query: (id) => `/asema/location` + id,
+      query: (id) => `/location` + id,
     }),
     getMostFiveReturn: builder.query({
-      query: () => `/asema/fivereturn`,
+      query: () => `/fivereturn`,
     }),
     getMostFiveDdeparture: builder.query({
-      query: () => `/asema/fivedeparture`,
+      query: () => `/fivedeparture`,
     }),
     createAsema: builder.mutation({
       query: (body) => ({
-        url: `/asema/`,
+        url: `/`,
         method: "POST",
         body,
       }),
@@ -45,4 +45,10 @@ export const apiAsema = createApi({
   }),
 });
 
-export const { useGetAsematQuery, useGetSingleAsematQuery } = apiAsema;
+export const {
+  useGetAsematQuery,
+  useGetSingleAsematQuery,
+  useGetTotalArrivalQuery,
+  useGetTotalDepartureQuery,
+  useGetAsematCapacityQuery,
+} = apiAsema;

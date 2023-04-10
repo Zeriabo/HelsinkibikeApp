@@ -12,7 +12,12 @@ import StationMap from "../../Components/StationMap";
 import DepartureJourneys from "../../Components/DepartureJourneys";
 import ArrivalJourneys from "../../Components/ArrivalJourneys";
 import { useGetSearchedDepartureJourneysQuery } from "../../Services/api/JourneyApi";
-import { useGetSearchedArrivalJourneysQuery } from "../../Services/api/JourneyApi";
+import {
+  useGetAsematQuery,
+  useGetSingleAsematQuery,
+  useGetTotalArrivalQuery,
+  useGetAsematCapacityQuery,
+} from "../../Services/api/AsemaApi";
 const AsemaPage = () => {
   const location = useLocation();
   const [asemaData, setAsemaData] = useState({});
@@ -20,11 +25,48 @@ const AsemaPage = () => {
   const [arrivalsData, setArrivalsData] = useState({});
   const [departurePage, setDeparturePage] = useState(1);
   const [arrivalPage, setArrivalPage] = useState(1);
+  const [totalArivals, setTotalArrivals] = useState(0);
+  const [totalDepartures, setTotalDepartures] = useState(0);
   useEffect(() => {
     setAsemaData(location.state);
     fetchDepartures();
     fetchArrivals();
+    fetchTotalArrivals();
+    fetchTotalDepartures();
   }, []);
+
+  const fetchTotalArrivals = async () => {
+    fetch(
+      "http://localhost:8080/asema/totalarrival?id=" +
+        location.state.asemaId +
+        "&page=1",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalArrivals(data);
+      });
+  };
+  const fetchTotalDepartures = async () => {
+    fetch(
+      "http://localhost:8080/asema/totaldeparture?id=" +
+        location.state.asemaId +
+        "&page=1",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setTotalDepartures(data);
+      });
+  };
   const fetchArrivals = async () => {
     fetch(
       "http://localhost:8080/journey/search_arrival?id=" +
@@ -39,8 +81,7 @@ const AsemaPage = () => {
       .then((response) => response.json())
       .then((data) => {
         setArrivalsData(data);
-      })
-      .then(() => console.log(arrivalsData));
+      });
   };
   const fetchDepartures = async () => {
     fetch(
@@ -70,7 +111,8 @@ const AsemaPage = () => {
     <div>
       <h2>{asemaData.name}</h2>
       <p>{asemaData.osoite}</p>
-
+      <p>Total number of journeys starting:{totalDepartures} </p>
+      <p>Total number of journeys ending:{totalArivals} </p>
       <StationMap
         station={asemaData}
         googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyAwnbwCN2ipDC54NnJFVj_OvBcVnwD5OFQ`}

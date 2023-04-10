@@ -2,7 +2,7 @@ import React from "react";
 
 function ArrivalJourneys(journeys) {
   let trips = [];
-  console.log(journeys);
+
   if (journeys.data != undefined || journeys.data != {}) {
     trips = journeys.data.content;
   }
