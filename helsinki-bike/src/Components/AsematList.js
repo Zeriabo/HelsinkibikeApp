@@ -45,15 +45,6 @@ function AsematList() {
       .then((data) => setContent(data.content))
       .then(() => console.log(content));
   };
-  // function handlePageChange(event) {
-  //   console.log(event);
-  //   console.log(event.target);
-  //   setPage(event.target.textContent);
-  //   fetch("http://localhost:8080/asemat/sorted?sortedBy=id&page=" + page)
-  //     .then((response) => response.json())
-  //     .then((data) => setContent(data.content))
-  //     .then(() => console.log(content));
-  // }
   function setActiveAsema(event) {
     navigate("/asema", { state: event });
   }
