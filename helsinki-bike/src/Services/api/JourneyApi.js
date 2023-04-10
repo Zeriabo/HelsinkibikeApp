@@ -11,14 +11,13 @@ export const apiJourney = createApi({
       query: (column) => `/sorted?sortedBy=` + column,
     }),
     getJourneysSortedPaged: builder.query({
-      //here
       query: (column, page) => `/sorted?sortedBy=` + column + `&page=` + page,
     }),
     getSearchedDepartureJourneys: builder.query({
-      query: (id) => `/search_departure?id=` + id,
+      query: (id) => `/search_departure?id=` + id + `&page=` + 1,
     }),
     getSearchedArrivalJourneys: builder.query({
-      query: (id) => `/search_arrival?id=` + id,
+      query: (id) => `/search_arrival?id=` + id + `&page=` + 1,
     }),
     getAVGDepartureJourneys: builder.query({
       query: (id) => `/avg_departure?id=` + id,

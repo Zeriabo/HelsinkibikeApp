@@ -13,7 +13,6 @@ import DepartureJourneys from "./DepartureJourneys";
 import ArrivalJourneys from "./ArrivalJourneys";
 const StationMap = withScriptjs(
   withGoogleMap((props) => {
-    console.log(props.station);
     const [x, setX] = useState(props.station.x);
     const [y, setY] = useState(props.station.y);
     const [map, setMap] = useState(null);

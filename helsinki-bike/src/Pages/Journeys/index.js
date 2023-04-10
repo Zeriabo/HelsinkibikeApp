@@ -38,6 +38,7 @@ export default function Journeys() {
   }
   const startIndex = currentPage * 100;
   const endIndex = (currentPage + 1) * 100;
+
   return (
     <div>
       <center>

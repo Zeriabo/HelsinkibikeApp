@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Pagination } from "@mui/material";
 import {
   GoogleMap,
   Marker,
@@ -14,27 +15,57 @@ import { useGetSearchedDepartureJourneysQuery } from "../../Services/api/Journey
 import { useGetSearchedArrivalJourneysQuery } from "../../Services/api/JourneyApi";
 const AsemaPage = () => {
   const location = useLocation();
-  const asemaData = location.state;
-  console.log(asemaData);
-  const { data, error, isLoading, isFetching } =
-    useGetSearchedDepartureJourneysQuery(asemaData.id);
-  const {
-    data: arrivalData,
-    error: arrivalError,
-    isLoading: arrivalisLoading,
-    isFetching: arrivalisFetching,
-  } = useGetSearchedArrivalJourneysQuery(asemaData.id);
-  console.log(data);
-  console.log(arrivalData);
-  const [showInfoWindow, setShowInfoWindow] = useState(false);
-
-  const handleMarkerClick = () => {
-    setShowInfoWindow(true);
+  const [asemaData, setAsemaData] = useState({});
+  const [departuresData, setDeparturesData] = useState({});
+  const [arrivalsData, setArrivalsData] = useState({});
+  const [departurePage, setDeparturePage] = useState(1);
+  const [arrivalPage, setArrivalPage] = useState(1);
+  useEffect(() => {
+    setAsemaData(location.state);
+    fetchDepartures();
+    fetchArrivals();
+  }, []);
+  const fetchArrivals = async () => {
+    fetch(
+      "http://localhost:8080/journey/search_arrival?id=" +
+        location.state.asemaId +
+        "&page=1",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setArrivalsData(data);
+      })
+      .then(() => console.log(arrivalsData));
   };
-  const handleInfoWindowCloseClick = () => {
-    setShowInfoWindow(false);
+  const fetchDepartures = async () => {
+    fetch(
+      "http://localhost:8080/journey/search_departure?id=" +
+        location.state.asemaId +
+        "&page=1",
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setDeparturesData(data);
+      });
   };
-  //setProps(x, y, data.name, data.osoite);
+  const handleDepartureListChange = (event, newPage) => {
+    setDeparturePage(newPage);
+    fetchDepartures();
+  };
+  const handleArrivalListChange = (event, newPage) => {
+    setArrivalPage(newPage);
+    fetchArrivals();
+  };
   return (
     <div>
       <h2>{asemaData.name}</h2>
@@ -50,11 +81,32 @@ const AsemaPage = () => {
       <div>
         <table>
           <tr>
+            <td></td>
             <td>
-              <DepartureJourneys data={data} />
+              <Pagination
+                className="my-departure_asemat"
+                count={22}
+                page={departurePage}
+                siblingCount={1}
+                boundaryCount={1}
+                variant="outlined"
+                shape="rounded"
+                onChange={handleDepartureListChange}
+              />
+              <DepartureJourneys data={departuresData} />
             </td>
             <td>
-              <ArrivalJourneys data={arrivalData} />
+              <Pagination
+                className="my-arrival_asemat"
+                count={22}
+                page={arrivalPage}
+                siblingCount={1}
+                boundaryCount={1}
+                variant="outlined"
+                shape="rounded"
+                onChange={handleArrivalListChange}
+              />
+              <ArrivalJourneys data={arrivalsData} />
             </td>
           </tr>
         </table>

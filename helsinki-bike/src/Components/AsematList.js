@@ -6,8 +6,6 @@ import { findAllByAltText } from "@testing-library/react";
 
 function AsematList() {
   const [page, setPage] = useState(0);
-  const { data, error, isLoading, isFetching } = useGetAsematQuery(page);
-  const [content, setContent] = useState("");
   const [empty, setEmpty] = useState(false);
   const [first, setFirst] = useState({});
   const [last, setLast] = useState({});
@@ -19,35 +17,58 @@ function AsematList() {
   const [totalPages, setTotalPages] = useState(0);
   const [search, setsearch] = useState("");
   const navigate = useNavigate();
+
+  const { data, error, isLoading, isFetching } = useGetAsematQuery(page);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [content, setContent] = useState({
+    content: [],
+    totalPages: 0,
+  });
+
   useEffect(() => {
-    if (data) {
-      setContent(data.content);
-      setTotalPages(data.totalPages - 1);
+    setContent(data);
+  }, []);
+
+  async function handlePreviousPageChange(page) {
+    if (page > 0) {
+      const prevPage = page - 1;
+      setCurrentPage(prevPage);
+
+      let response = fetch(
+        "http://localhost:8080/asema/sorted?sortedBy=id&page=" + prevPage
+      );
+      response
+        .then((response) => response.json())
+        .then((data) => setContent(data));
     }
-  }, [page]);
-
-  const onChangeSearchTitle = (e) => {
-    setsearch(e.target.value);
-    const filteredData = data.content.filter((item) =>
-      item.name.toLowerCase().includes(search.toLowerCase())
+  }
+  function handlePageChange(page) {
+    setCurrentPage(page);
+    let newData = fetch(
+      "http://localhost:8080/asema/sorted?sortedBy=id&page=" + page
     );
-
-    setContent(filteredData);
-  };
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-    fetch("http://localhost:8080/asemat/sorted?sortedBy=id&page=" + page, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
+    newData
       .then((response) => response.json())
-      .then((data) => setContent(data.content))
-      .then(() => console.log(content));
-  };
+      .then((data) => setContent(data));
+  }
   function setActiveAsema(event) {
     navigate("/asema", { state: event });
   }
+  const onChangeSearchTitle = (e) => {
+    setsearch(e.target.value);
+
+    var filteredData = { content: [] };
+
+    filteredData.content = content.content.filter((item) =>
+      item.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (e.target.value.length == 0) {
+      setContent(data);
+    } else {
+      setContent(filteredData);
+    }
+  };
 
   return (
     <div className="list row">
@@ -75,8 +96,8 @@ function AsematList() {
         <h4>Asemat List</h4>
 
         <ul className="list-group">
-          {content &&
-            content.map((asema, index) => (
+          {content.content &&
+            content.content.map((asema, index) => (
               <li onClick={() => setActiveAsema(asema, index)} key={index}>
                 {asema.name}
               </li>
