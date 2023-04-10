@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ex.app.exceptions.InputException;
 import com.ex.app.models.Asemat;
+import com.ex.app.models.Journey;
 import com.ex.app.models.ResponseMessage;
 import com.ex.app.services.AsemaService;
 import com.ex.app.services.CSVService;
 
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin(origins ="http://localhost:3000")
 @RequestMapping("/asema")
 @RestController
 public class AsemaController {
@@ -38,7 +39,7 @@ public AsemaController()
 	
 }
 	@PostMapping("/")
-	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) throws InputException {
+	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) throws Exception {
     if(asema.getAdres()==null  || asema.getKaupunki()==null || asema.getName()==null ||asema.getNamn()==null || asema.getNimi() ==null 
     		|| asema.getOperator()==null || asema.getOsoite()== null ||asema.getStad()==null )
     {
@@ -53,6 +54,7 @@ public AsemaController()
 		}
 
 	}
+		
 	@PostMapping("/upload")
 	public ResponseEntity<ResponseMessage> uploadFile() {
 		String message = "";
@@ -75,18 +77,31 @@ public AsemaController()
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<Page<Asemat>> getStations() {
+	public ResponseEntity<Page<Asemat>> getStations(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "id")  String sortedBy) {
 
 
 		try {
 			
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllStations());
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllStations(sortedBy, page));
 		} catch (Exception e) {
 		
 			throw e;
 		}
 
 	}
+	@GetMapping("/sorted")
+	public ResponseEntity<Page<Asemat>> getJourneysSorted(@RequestParam(defaultValue = "1") Integer page,@RequestParam String sortedBy) {
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getAllStations(sortedBy, page));
+		} catch (Exception e) {
+
+			throw e;
+		}
+
+	}
+
 	@GetMapping("/search_capacity")
 	public ResponseEntity<Page<Asemat>> getStationsByCapacity(@RequestParam String search) {
 
@@ -159,7 +174,34 @@ public AsemaController()
 	}
 	
 
+	//Total number of journeys starting from the station
+	//Total number of journeys ending at the station
+	@GetMapping("/totaldeparture")
+	public ResponseEntity<Object> getTotalDeparture(@RequestParam long id) {
 
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getTotalDeparture(id));
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
+	@GetMapping("/totalarrival")
+	public ResponseEntity<Object> getTotalArrival(@RequestParam long id) {
+
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getTotalArrival(id));
+		} catch (Exception e) {
+		
+			throw e;
+		}
+
+	}
 	
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.ex.app.models.Asemat;
+import com.ex.app.models.Journey;
 import com.ex.app.repository.AsemaPaginationRepository;
 import com.ex.app.repository.AsematRepository;
 
@@ -30,9 +31,17 @@ public class AsemaService {
 		return result;
 	}
 
-	public Page<Asemat> getAllStations() {
+	public Page<Asemat> getAllStations(String sort,Integer page) {
 
-		PageRequest pr = PageRequest.of(1, 100, Sort.by("id"));
+		if(page==null)
+		{
+			page=1;
+		}
+		if(sort ==null)
+		{
+			sort="id";
+		}
+		PageRequest pr = PageRequest.of(page, 100, Sort.by(sort));
 		
 		Page<Asemat> result = asematPaginationRepository.findAll(pr);
 
@@ -88,7 +97,16 @@ public class AsemaService {
 		return result;
 	
 	}
+	public Object getTotalDeparture(long id) {
+		int result = asematRepository.totalDeparture(id);
+		return result;
 	
+	}
+	public Object getTotalArrival(long id) {
+		int result = asematRepository.totalArrival(id);
+		return result;
+	
+	}
 	public Asemat createAsema(Asemat asema) {
 		try {
 		 Asemat result = asematRepository.save(asema);

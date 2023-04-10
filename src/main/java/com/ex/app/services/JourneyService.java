@@ -28,27 +28,27 @@ public class JourneyService {
 		return pagedResult;
 	}
 
-	public Page<Journey> getAllJourneysSortedBy(String sort) {
+	public Page<Journey> getAllJourneysSortedBy(String sort,Integer page) {
 
-		PageRequest pr = PageRequest.of(1, 100, Sort.by(sort));
+		PageRequest pr = PageRequest.of(page, 100, Sort.by(sort));
 
 		Page<Journey> pagedResult = journeyRepository.findAll(pr);
 
 		return pagedResult;
 	}
 
-	public Page<Journey> getAllJourneysSearchedByDeparture( String search) {
+	public Page<Journey> getAllJourneysSearchedByDeparture( int id, int page) {
 		
-		PageRequest pr = PageRequest.of(1, 5);
-		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByDeparture(search, pr);
+		PageRequest pr = PageRequest.of(page, 10,Sort.unsorted());
+		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByDeparture(id, pr);
 
 		return pagedResult;
 	}
 	
-public Page<Journey> getAllJourneysSearchedByArrival( String search) {
+public Page<Journey> getAllJourneysSearchedByArrival( int id,int page) {
 		
-		PageRequest pr = PageRequest.of(1, 5);
-		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByArrival(search, pr);
+		PageRequest pr = PageRequest.of(page, 10,Sort.unsorted());
+		Page<Journey> pagedResult = journeyPaginationRepsitory.searchJourneysByArrival(id, pr);
 
 		return pagedResult;
 	}

@@ -12,12 +12,12 @@ import com.ex.app.models.Journey;
 public interface JourneyPaginationRepository extends PagingAndSortingRepository<Journey,Long> {
 
 
-@Query(value = "SELECT * FROM public.journey j WHERE j.departure_station_name = ?1", nativeQuery = true)
-	Page<Journey> searchJourneysByDeparture(String search,PageRequest pageable);
+@Query(value = "SELECT * FROM public.journey j WHERE j.departure_station_id= ?1", nativeQuery = true)
+	Page<Journey> searchJourneysByDeparture(int id,PageRequest pageable);
 
 
-@Query(value = "SELECT * FROM public.journey j WHERE j.arrival_station_name = ?1", nativeQuery = true)
-Page<Journey> searchJourneysByArrival(String arrival,PageRequest pageable);
+@Query(value = "SELECT * FROM public.journey j WHERE j.arrival_station_id = ?1", nativeQuery = true)
+Page<Journey> searchJourneysByArrival(int id,PageRequest pageable);
 
 
 
