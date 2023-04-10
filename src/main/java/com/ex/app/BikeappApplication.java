@@ -17,12 +17,12 @@ public class BikeappApplication {
 
 		 AsemaController asemaBean = context.getBean(AsemaController.class);
 		                 JourneyController journeyBean = context.getBean(JourneyController.class);
-		ResponseEntity<Page<Asemat>> asemat =asemaBean.getStations();
+		ResponseEntity<Page<Asemat>> asemat =asemaBean.getStations(null, null);
 		if(asemat.getBody().getTotalElements()==0)
 		{
 			asemaBean.uploadFile();
 		}
-		ResponseEntity<Page<Journey>> journeys = journeyBean.getJourneys();
+		ResponseEntity<Page<Journey>> journeys = journeyBean.getJourneys(0);
 		if(journeys.getBody().getTotalElements()==0)
 		{
 			journeyBean.uploadFile();

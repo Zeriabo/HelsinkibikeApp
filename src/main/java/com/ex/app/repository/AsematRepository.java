@@ -64,4 +64,11 @@ public interface AsematRepository extends JpaRepository<Asemat,Long> {
 			+ "   q1.countDeparture, q2.countArrival DESC", nativeQuery=true)
 	List<Object>getSingleStationInfo(long id);
 
+	@Query(value="select count(*) from  public.journey"
+			+ " where departure_station_id=?1", nativeQuery=true)
+	int totalDeparture(long id);
+	
+	@Query(value="select count(*) from  public.journey"
+			+ " where arrival_station_id=?1", nativeQuery=true)
+	int totalArrival(long id);
 }   

@@ -19,7 +19,7 @@ import com.ex.app.models.ResponseMessage;
 import com.ex.app.services.CSVService;
 import com.ex.app.services.JourneyService;
 
-@CrossOrigin("http://localhost:8080")
+@CrossOrigin(origins ="http://localhost:3000")
 @RequestMapping("/journey")
 @RestController
 public class JourneyController {
@@ -30,11 +30,11 @@ public class JourneyController {
 	JourneyService journeyService;
 
 	@GetMapping("/")
-	public ResponseEntity<Page<Journey>> getJourneys() {
+	public ResponseEntity<Page<Journey>> getJourneys(@RequestParam(defaultValue = "0") Integer page) {
 
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy("id"));
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy("id", page));
 		} catch (Exception e) {
 
 			throw e;
@@ -43,11 +43,11 @@ public class JourneyController {
 	}
 
 	@GetMapping("/sorted")
-	public ResponseEntity<Page<Journey>> getJourneysSorted(@RequestParam String sortedBy) {
+	public ResponseEntity<Page<Journey>> getJourneysSorted(@RequestParam(defaultValue = "0") Integer page,@RequestParam(defaultValue = "id") String sortedBy) {
 
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy(sortedBy));
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSortedBy(sortedBy,page));
 		} catch (Exception e) {
 
 			throw e;
@@ -56,11 +56,11 @@ public class JourneyController {
 	}
 
 	@GetMapping("/search_departure")
-	public ResponseEntity<Page<Journey>> getSearchByDepartureJourneys(@RequestParam String search) {
+	public ResponseEntity<Page<Journey>> getSearchByDepartureJourneys(@RequestParam int id,@RequestParam int page) {
 
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByDeparture(search));
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByDeparture(id,page));
 		} catch (Exception e) {
 
 			throw e;
@@ -69,12 +69,13 @@ public class JourneyController {
 	}
 
 	@GetMapping("/search_arrival")
-	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam String search) {
+	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam int id,@RequestParam int page) {
 
 
 		try {
+		
 
-			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(search));
+			return ResponseEntity.status(HttpStatus.OK).body(journeyService.getAllJourneysSearchedByArrival(id,page));
 		} catch (Exception e) {
 
 			throw e;
