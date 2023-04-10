@@ -4,6 +4,7 @@ import rootReducer from "../Reducers/rootReducer";
 import logger from "redux-logger";
 import AsemaSlice, { asematSlice } from "../Reducers/AsemaSlice";
 import { apiAsema } from "../api/AsemaApi";
+import { apiJourney } from "../api/JourneyApi";
 // convert object to string and store in localStorage
 function saveToLocalStorage(state) {
   try {
@@ -28,10 +29,13 @@ const preloadedState = loadFromLocalStorage();
 export const store = configureStore({
   reducer: {
     [apiAsema.reducerPath]: apiAsema.reducer,
+    [apiJourney.reducerPath]: apiJourney.reducer,
   },
   preloadedState,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiAsema.middleware), //.concat(logger)
+    getDefaultMiddleware()
+      .concat(apiAsema.middleware)
+      .concat(apiJourney.middleware), //.concat(logger)
   devTools: process.env.NODE_ENV !== "production",
 });
 store.subscribe(() => saveToLocalStorage(store.getState()));

@@ -19,7 +19,6 @@ function AsematList() {
   const [search, setsearch] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    //setNumberOfElements(data.numberOfElements);
     setContent(data.content);
     setTotalPages(data.totalPages - 1);
   }, [page]);
@@ -34,15 +33,10 @@ function AsematList() {
   };
 
   const setActiveTutorial = (event) => {
-    console.log(event);
     navigate("/asema", { state: event });
   };
   const handlePageChange = (event, value) => {
     setPage(value);
-  };
-
-  const handlePageSizeChange = (event) => {
-    console.log(event);
   };
 
   return (

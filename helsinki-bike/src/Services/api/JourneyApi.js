@@ -1,9 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IProduct } from "../../types/types";
 
-export const journeyApi = createApi({
+export const apiJourney = createApi({
   reducerPath: "journeyApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://localhost:8080/journey" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/journey" }),
   endpoints: (builder) => ({
     getJourneys: builder.query({
       query: () => `/`,
@@ -11,11 +10,15 @@ export const journeyApi = createApi({
     getJourneysSorted: builder.query({
       query: (column) => `/sorted?sortedBy=` + column,
     }),
+    getJourneysSortedPaged: builder.query({
+      //here
+      query: (column, page) => `/sorted?sortedBy=` + column + `&page=` + page,
+    }),
     getSearchedDepartureJourneys: builder.query({
-      query: (search) => `/search_departure?search=` + search,
+      query: (id) => `/search_departure?id=` + id,
     }),
     getSearchedArrivalJourneys: builder.query({
-      query: (search) => `/search_arrival?search=` + search,
+      query: (id) => `/search_arrival?id=` + id,
     }),
     getAVGDepartureJourneys: builder.query({
       query: (id) => `/avg_departure?id=` + id,
@@ -39,4 +42,11 @@ export const journeyApi = createApi({
   }),
 });
 
-export const { useGetJourneysQuery, useUploadJourneysMutation } = journeyApi;
+export const {
+  useGetJourneysQuery,
+  useGetJourneysSortedQuery,
+  useGetJourneysSortedPagedQuery,
+  useUploadJourneysMutation,
+  useGetSearchedArrivalJourneysQuery,
+  useGetSearchedDepartureJourneysQuery,
+} = apiJourney;
