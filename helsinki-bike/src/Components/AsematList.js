@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pagination } from "@mui/material";
 import { useGetAsematQuery } from "../Services/api/AsemaApi";
 import { useNavigate } from "react-router-dom";
+import { findAllByAltText } from "@testing-library/react";
 
 function AsematList() {
   const [page, setPage] = useState(0);
@@ -19,8 +20,10 @@ function AsematList() {
   const [search, setsearch] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
-    setContent(data.content);
-    setTotalPages(data.totalPages - 1);
+    if (data) {
+      setContent(data.content);
+      setTotalPages(data.totalPages - 1);
+    }
   }, [page]);
 
   const onChangeSearchTitle = (e) => {
@@ -31,13 +34,29 @@ function AsematList() {
 
     setContent(filteredData);
   };
-
-  const setActiveTutorial = (event) => {
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
+    fetch("http://localhost:8080/asemat/sorted?sortedBy=id&page=" + page, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => setContent(data.content))
+      .then(() => console.log(content));
+  };
+  // function handlePageChange(event) {
+  //   console.log(event);
+  //   console.log(event.target);
+  //   setPage(event.target.textContent);
+  //   fetch("http://localhost:8080/asemat/sorted?sortedBy=id&page=" + page)
+  //     .then((response) => response.json())
+  //     .then((data) => setContent(data.content))
+  //     .then(() => console.log(content));
+  // }
+  function setActiveAsema(event) {
     navigate("/asema", { state: event });
-  };
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
+  }
 
   return (
     <div className="list row">
@@ -67,7 +86,7 @@ function AsematList() {
         <ul className="list-group">
           {content &&
             content.map((asema, index) => (
-              <li onClick={() => setActiveTutorial(asema, index)} key={index}>
+              <li onClick={() => setActiveAsema(asema, index)} key={index}>
                 {asema.name}
               </li>
             ))}
