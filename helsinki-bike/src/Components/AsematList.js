@@ -6,14 +6,6 @@ import { findAllByAltText } from "@testing-library/react";
 
 function AsematList() {
   const [page, setPage] = useState(0);
-  const [empty, setEmpty] = useState(false);
-  const [first, setFirst] = useState({});
-  const [last, setLast] = useState({});
-  const [number, setNumber] = useState(0);
-  const [pageable, setPagable] = useState(true);
-  const [size, setSize] = useState(0);
-  const [sort, setSort] = useState(true);
-  const [totalElements, setTotalElements] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [search, setsearch] = useState("");
   const navigate = useNavigate();
