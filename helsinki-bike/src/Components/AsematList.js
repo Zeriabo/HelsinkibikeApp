@@ -26,7 +26,10 @@ function AsematList() {
   });
 
   useEffect(() => {
-    setContent(data);
+    fetch("http://localhost:8080/asema/")
+      .then((responseData) => responseData.json())
+      .then((rdata) => setContent(rdata))
+      .catch((err) => console.log(err));
   }, []);
 
   async function handlePreviousPageChange(page) {
