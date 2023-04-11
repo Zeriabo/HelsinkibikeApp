@@ -26,23 +26,27 @@ public interface AsematRepository extends JpaRepository<Asemat,Long> {
 
 	@Query(value="SELECT x,y FROM public.asemat "
 			+ "WHERE id=?1", nativeQuery=true)
-	Object getLocation(int id);
+	Object getLocation(Long id);
 	
-	@Query(value="SELECT asemat.name name,count(*) count "
-			+ "FROM public.journey j ,public.asemat asemat "
-			+ "WHERE j.arrival_station_id= asemat.id "
-			+ "GROUP BY name "
-			+ "ORDER BY count DESC "
-			+ "LIMIT 5", nativeQuery=true)
-	List<Object> getMostFiveReturn();
+	@Query(value="SELECT name"
+			+ " FROM (SELECT asemat.name name, count(j.id) cou"
+			+ " FROM public.journey j ,public.asemat asemat"
+			+ " WHERE j.arrival_station_id=?1"
+			+ " GROUP BY  name"
+			+ " ORDER BY cou DESC"
+			+ " LIMIT 5"
+			+ ") as tbl", nativeQuery=true)
+	List<Object> getMostFiveReturn(Long id);
 	
-	@Query(value="SELECT asemat.name name,count(*) count "
-			+ "FROM public.journey j ,public.asemat asemat "
-			+ "WHERE j.departure_station_id= asemat.id "
-			+ "GROUP BY name "
-			+ "ORDER BY count DESC "
-			+ "LIMIT 5", nativeQuery=true)
-	List<Object> getMostFiveDeparture();
+	@Query(value="SELECT name"
+			+ " FROM (SELECT asemat.name name, count(j.id) cou"
+			+ " FROM public.journey j ,public.asemat asemat"
+			+ " WHERE j.departure_station_id=?1"
+			+ " GROUP BY  name"
+			+ " ORDER BY cou DESC"
+			+ " LIMIT 5"
+			+ ") as tbl", nativeQuery=true)
+	List<Object> getMostFiveDeparture(Long id);
 	
 	@Query(value="SELECT \n"
 			+ "  q1.nimi,countDeparture,countArrival\n"

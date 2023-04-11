@@ -78,22 +78,22 @@ public class AsemaService {
 		return result;
 	}
 
-	public Object getStationLocation(int id) {
+	public Object getStationLocation(Long id) {
 		Object result = asematRepository.getLocation(id);
 
 		return result;
 	
 	}
 	
-	public Object getMostFiveReturn() {
-		Object result = asematRepository.getMostFiveReturn();
+	public Object getMostFiveReturn(Long id) {
+		Object result = asematRepository.getMostFiveReturn(id);
 
 		return result;
 	
 	}
 	
-	public Object getMostFiveDeparture() {
-		List<Object> result = asematRepository.getMostFiveDeparture();
+	public Object getMostFiveDeparture(Long id) {
+		List<Object> result = asematRepository.getMostFiveDeparture(id);
 		return result;
 	
 	}
