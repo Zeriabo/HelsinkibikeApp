@@ -132,13 +132,13 @@ public AsemaController()
 	}
 	
 	@GetMapping("/location")
-	public ResponseEntity<Object> getStationLocation(@RequestParam String idParam) {
+	public ResponseEntity<Object> getStationLocation(@RequestParam Long idParam) {
 
 
 		try {
-			int id = Integer.parseInt(idParam);
+		
 
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getStationLocation(id));
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getStationLocation(idParam));
 		} catch (Exception e) {
 		
 			throw e;
@@ -146,12 +146,12 @@ public AsemaController()
 
 	}
 	@GetMapping("/fivereturn")
-	public ResponseEntity<Object> getMostFiveReturn() {
+	public ResponseEntity<Object> getMostFiveReturn(@RequestParam Long idParam) {
 
 
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveReturn());
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveReturn(idParam));
 		} catch (Exception e) {
 		
 			throw e;
@@ -160,12 +160,12 @@ public AsemaController()
 	}
 	
 	@GetMapping("/fivedeparture")
-	public ResponseEntity<Object> getMostFiveDeparture() {
+	public ResponseEntity<Object> getMostFiveDeparture(@RequestParam Long idParam) {
 
 
 		try {
 
-			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveDeparture());
+			return ResponseEntity.status(HttpStatus.OK).body(asemaService.getMostFiveDeparture(idParam));
 		} catch (Exception e) {
 		
 			throw e;
@@ -173,9 +173,6 @@ public AsemaController()
 
 	}
 	
-
-	//Total number of journeys starting from the station
-	//Total number of journeys ending at the station
 	@GetMapping("/totaldeparture")
 	public ResponseEntity<Object> getTotalDeparture(@RequestParam long id) {
 
