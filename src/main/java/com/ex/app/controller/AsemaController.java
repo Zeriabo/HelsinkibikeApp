@@ -173,9 +173,6 @@ public AsemaController()
 
 	}
 	
-
-	//Total number of journeys starting from the station
-	//Total number of journeys ending at the station
 	@GetMapping("/totaldeparture")
 	public ResponseEntity<Object> getTotalDeparture(@RequestParam long id) {
 
