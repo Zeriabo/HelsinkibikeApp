@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ import com.ex.app.models.ResponseMessage;
 import com.ex.app.services.AsemaService;
 import com.ex.app.services.CSVService;
 
-@CrossOrigin(origins ="http://localhost:3000")
+@CrossOrigin
 @RequestMapping("/asema")
 @RestController
 public class AsemaController {
@@ -39,22 +40,26 @@ public AsemaController()
 	
 }
 	@PostMapping("/")
-	public ResponseEntity<Asemat> createAsema(@RequestBody Asemat  asema) throws Exception {
-    if(asema.getAdres()==null  || asema.getKaupunki()==null || asema.getName()==null ||asema.getNamn()==null || asema.getNimi() ==null 
-    		|| asema.getOperator()==null || asema.getOsoite()== null ||asema.getStad()==null )
+	public ResponseEntity<Asemat> createAsema(@RequestBody Object  asema) throws Exception {
+		
+
+		ModelMapper modelMapper = new ModelMapper();
+		Asemat newAsema = modelMapper.map(asema, Asemat.class);
+    if(newAsema.getAdres()==null  || newAsema.getKaupunki()==null || newAsema.getName()==null ||newAsema.getNamn()==null || newAsema.getNimi() ==null 
+    		|| newAsema.getOperator()==null || newAsema.getOsoite()== null ||newAsema.getStad()==null )
     {
     	throw new InputException("Wrong input!");
     }
 		try {
 			
-				return ResponseEntity.status(HttpStatus.OK).body(asemaService.createAsema(asema));
+				return ResponseEntity.status(HttpStatus.OK).body(asemaService.createAsema(newAsema));
 		} catch (Exception e) {
 		
 			throw e;
 		}
 
 	}
-		
+	
 	@PostMapping("/upload")
 	public ResponseEntity<ResponseMessage> uploadFile() {
 		String message = "";
