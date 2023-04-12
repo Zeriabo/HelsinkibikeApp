@@ -58,6 +58,7 @@ const AsemaPage = () => {
       .then((rdata) => setFiveDepartures(rdata))
       .catch((err) => console.log(err));
   };
+  console.log(asemaData);
   const fetchTotalArrivals = async () => {
     fetch(
       "http://localhost:8080/asema/totalarrival?id=" +

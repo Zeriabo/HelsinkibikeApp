@@ -46,6 +46,7 @@ export const apiAsema = createApi({
 });
 
 export const {
+  useCreateAsemaMutation,
   useGetAsematQuery,
   useGetSingleAsematQuery,
   useGetTotalArrivalQuery,

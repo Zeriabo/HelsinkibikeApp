@@ -14,6 +14,12 @@ const index = () => {
         <li>
           <Link to="/journeys">View all journeys</Link>
         </li>
+        <li>
+          <Link to="/createasema">Create new station</Link>
+        </li>
+        <li>
+          <Link to="/createjourney">Create new journey</Link>
+        </li>
       </ul>
     </div>
   );

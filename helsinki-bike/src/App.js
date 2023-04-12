@@ -2,6 +2,8 @@ import "./App.css";
 import Asemat from "./Pages/Asemat/Asemat";
 import Jouneys from "./Pages/Journeys";
 import Home from "./Layouts/Main";
+import Journey from "./Pages/Journey";
+import Station from "./Pages/Station/Station";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,6 +24,8 @@ function App() {
           <Route path="/asemat" element={<AsematList />}></Route>
           <Route path="/asema" element={<Asema />}></Route>
           <Route path="/journeys" element={<Jouneys />}></Route>
+          <Route path="/createasema" element={<Station />}></Route>
+          <Route path="/createjourney" element={<Journey />}></Route>
         </Routes>
       </Router>
     </div>
