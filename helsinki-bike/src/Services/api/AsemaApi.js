@@ -52,4 +52,5 @@ export const {
   useGetTotalArrivalQuery,
   useGetTotalDepartureQuery,
   useGetAsematCapacityQuery,
+  useGetMostFiveDdepartureQuery,
 } = apiAsema;

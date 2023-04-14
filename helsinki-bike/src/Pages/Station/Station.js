@@ -32,7 +32,7 @@ const Station = () => {
       y: y,
     };
     axios
-      .post("http://localhost:8080/asema", newStation)
+      .post("http://localhost:8080/asema/", newStation)
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
   };

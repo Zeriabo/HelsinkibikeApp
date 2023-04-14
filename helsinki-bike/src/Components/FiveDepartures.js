@@ -2,11 +2,10 @@ import React from "react";
 
 function FiveDepartures(obj) {
   let stations = [];
-  console.log(obj);
+
   if (obj.journeys.length > 0) {
     stations = obj.journeys;
   }
-  console.log(stations);
 
   return (
     <div className="arrival-info">
