@@ -106,8 +106,8 @@ public class Asemat implements Serializable{
 	}
 
 
-	private  @GeneratedValue  Long fid;
-	private@Id @GeneratedValue Long   id;
+	private @Id  @GeneratedValue  Long fid;
+	private @GeneratedValue Long   id;
 	private String name;
 	private String namn;
 	private String nimi;

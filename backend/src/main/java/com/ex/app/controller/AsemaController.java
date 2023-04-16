@@ -6,12 +6,15 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +32,7 @@ import com.ex.app.services.CSVService;
 @RestController
 public class AsemaController {
 
+	ClassPathResource resource = new ClassPathResource("Helsingin_ja_Espoon_kaupunkipy_asemat_avoin.csv");
 	@Autowired
 	CSVService fileService;
 	
@@ -42,7 +46,7 @@ public AsemaController()
 	@PostMapping("/")
 	public ResponseEntity<Asemat> createAsema(@RequestBody Object  asema) throws Exception {
 		
-
+		
 		ModelMapper modelMapper = new ModelMapper();
 		Asemat newAsema = modelMapper.map(asema, Asemat.class);
     if(newAsema.getAdres()==null  || newAsema.getKaupunki()==null || newAsema.getName()==null ||newAsema.getNamn()==null || newAsema.getNimi() ==null 
@@ -62,20 +66,25 @@ public AsemaController()
 	
 	@PostMapping("/upload")
 	public ResponseEntity<ResponseMessage> uploadFile() {
-		String message = "";
 
+		String message = "";
 		try {
-			File file = new File("src/main/resources/Helsingin_ja_Espoon_kaupunkipy_asemat_avoin.csv");
-	
+			File file = resource.getFile();
+			if(!file.exists())
+			{
+				message="File doesn't exists !"+file.getAbsolutePath();
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage(message));
+			}
        
 			fileService.saveAsemat(file);
 
-		
 
 			message = "Uploaded the file successfully: " + file.getName();
+	
+			
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
 		} catch (Exception e) {
-			message = "Could not upload the file  !";
+			message = "Error: "+e.getMessage();
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 		}
 

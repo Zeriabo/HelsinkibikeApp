@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,10 @@ public class JourneyController {
 	CSVService fileService;
 	@Autowired
 	JourneyService journeyService;
+	
+	ClassPathResource resource5 = new ClassPathResource("2021-05.csv");
+	ClassPathResource resource6 = new ClassPathResource("2021-06.csv");
+	ClassPathResource resource7 = new ClassPathResource("2021-07.csv");
 
 	@GetMapping("/")
 	public ResponseEntity<Page<Journey>> getJourneys(@RequestParam(defaultValue = "0") Integer page) {
@@ -113,20 +118,22 @@ public class JourneyController {
 		String message = "";
 
 		try {
-			File file = new File("src/main/resources/2021-05.csv");
-			File file2 = new File("src/main/resources/2021-06.csv");
-			File file3 = new File("src/main/resources/2021-07.csv");
+			
+			File file = resource5.getFile();
+//			File file = new File("src/main/resources/2021-05.csv");
+//			File file2 = new File("src/main/resources/2021-06.csv");
+//			File file3 = new File("src/main/resources/2021-07.csv");
+			File file2 =resource6.getFile();
+			File file3 = resource7.getFile();
        
 			fileService.saveJourneys(file);
 			fileService.saveJourneys(file2);
 			fileService.saveJourneys(file3);
 
-		
-
-			message = "Uploaded the file successfully: " + file.getName();
+			message = "Uploaded the files successfully";
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
 		} catch (Exception e) {
-			message = "Could not upload the file  !";
+			message = "Could not upload the file! "+e.getMessage();
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
 		}
 

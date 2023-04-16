@@ -18,17 +18,22 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=create
       - spring.jpa.database=POSTGRESQL
       - spring.jpa.show-sql=false
-      - spring.jpa.hibernate.ddl-auto=update
+      - spring.jpa.hibernate.ddl-auto=create
       - spring.datasource.driver-class-name=org.postgresql.Driver
       - spring.datasource.url=jdbc:postgresql://localhost/helsinkibike
       - spring.servlet.multipart.max-file-size=100000KB
       - spring.servlet.multipart.max-request-size=100000KB
-          
+
   db:
     image: 'postgres:latest'
+    restart: always
     ports:
-      - "5433:5433"
+      - "5433:5432"
+    expose:
+      - "5433"
     container_name: db
     environment:
       - POSTGRES_USER=zeriab
       - POSTGRES_PASSWORD=zeriab
+    volumes:
+      - ./data:/var/lib/postgresql/data

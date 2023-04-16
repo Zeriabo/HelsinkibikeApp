@@ -159,7 +159,7 @@ public class CSVHelper {
 					asema.setX(Double.parseDouble(csvRecord.get("y")));
 
 				} catch (Exception ex) {
-					System.out.println(ex.getMessage() + "    " + ex);
+					throw ex;
 
 				}
 
