@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -30,108 +32,56 @@ public class CSVHelper {
 	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 	static String[] HEADERs = { "Departure", "Return", "Departure station id", "Departure station name",
 			"Return station id", "Return station name", "Covered distance (m)", "Duration (sec.)" };
-	private static final DecimalFormat df = new DecimalFormat("0.00");
+
 
 	public static boolean hasCSVFormat(File file) {
-
-//	    if (!TYPE.equals(file.())) {
-//	      return false;
-//	    }
-
-		return true;
+	    String fileName = file.getName();
+	    String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+	    return extension.equalsIgnoreCase("csv");
 	}
-
 	public static List<Journey> csvToJourneys(InputStream is) throws ParseException {
-		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-				CSVParser csvParser = new CSVParser(fileReader,
-						CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim());) {
+	    List<Journey> journeys = new ArrayList<>();
 
-			List<Journey> journeys = new ArrayList<Journey>();
+	    try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+	         CSVParser parser = CSVFormat.DEFAULT.withFirstRecordAsHeader().withIgnoreHeaderCase().withTrim().parse(reader)) {
 
-			Iterable<CSVRecord> csvRecords = csvParser.getRecords();
-			for (CSVRecord csvRecord : csvRecords) {
-				Journey journey = new Journey();
-				try {
+	        for (CSVRecord record : parser) {
+	            Journey journey = new Journey();
+	            try {
+	                LocalDateTime departure = LocalDateTime.parse(record.get(0), formatter);
+	                LocalDateTime arrival = LocalDateTime.parse(record.get("Return"), formatter);
+	                double duration = Double.parseDouble(record.get("Duration (sec.)"));
+	                double distance = Double.parseDouble(record.get("Covered distance (m)"));
+	                int departureStationId = Integer.parseInt(record.get("Departure station id"));
+	                int arrivalStationId = Integer.parseInt(record.get("Return station id"));
 
-					if ((csvRecord.get(0).length() == 19) && (csvRecord.get(1).length() == 19)) {
+	                // Only add the journey if all the conditions are met
+	                if (departure != null && arrival != null
+	                        && Duration.between(departure, arrival).getSeconds() >= 11
+	                        && distance >= 10 && duration >= 10) {
 
-						if (!(LocalDateTime.parse(csvRecord.get(0)).until(LocalDateTime.parse(csvRecord.get("Return")),
-								ChronoUnit.SECONDS) < 11)
+	                    journey.setDeparture(departure);
+	                    journey.setArrival(arrival);
+	                    journey.setDepartureStationId(departureStationId);
+	                    journey.setDepartureStationName(record.get("Departure station name"));
+	                    journey.setArrivalStationId(arrivalStationId);
+	                    journey.setArrivalStationName(record.get("Return station name"));
+	                    journey.setDuration(duration);
+	                    journey.setCoveredDistance(distance);
+	                    journeys.add(journey);
+	                }
+	            } catch (Exception ex) {
+	                System.err.println("Error while processing CSV record: " + ex.getMessage());
+	            }
+	        }
 
-								&& !(csvRecord.get(6).length() == 0)
+	    } catch (IOException e) {
+	        throw new RuntimeException("Failed to parse CSV file: " + e.getMessage(), e);
+	    }
 
-								&& !(Double.parseDouble(csvRecord.get(6)) < 10 || csvRecord.get(6) == null)
-
-								&& !(Double.parseDouble(csvRecord.get("Duration (sec.)")) < 10
-										|| csvRecord.get("Duration (sec.)").length() == 0
-										|| csvRecord.get("Duration (sec.)") == null))
-
-						{
-
-							if (csvRecord.get("Return").trim().length() == 0) {
-								journey.setArrival(null);
-
-							} else if (csvRecord.get("Return") == "") {
-								journey.setArrival(null);
-							} else if (csvRecord.get("Return").trim().length() == 1) {
-								journey.setArrival(null);
-							} else if (csvRecord.get("Return").trim().length() > 15) {
-								journey.setArrival(LocalDateTime.parse(csvRecord.get("Return"), formatter));
-							}
-
-							if (csvRecord.get(0).length() == 0) {
-								journey.setDeparture(null);
-							} else if (csvRecord.get(0).trim().length() > 15) {
-								journey.setDeparture(LocalDateTime.parse(csvRecord.get(0), formatter));
-							} else {
-								journey.setDeparture(null);
-							}
-
-							journey.setDepartureStationName(csvRecord.get("Departure station name"));
-							journey.setArrivalStationName(csvRecord.get("Return station name"));
-
-							try {
-								if (csvRecord.get("Duration (sec.)") == "") {
-									journey.setDuration(0);
-								} else {
-									journey.setDuration(Double.parseDouble(csvRecord.get("Duration (sec.)"))); //
-								}
-								if (csvRecord.get("Return station id") == "") {
-									journey.setArrivalStationId(0);
-								} else {
-									journey.setArrivalStationId(Integer.parseInt(csvRecord.get("Return station id"))); //
-								}
-								if (csvRecord.get("Covered distance (m)") == "") {
-									journey.setCoveredDistance(0);
-								} else {
-
-									journey.setCoveredDistance(Double.parseDouble(csvRecord.get(6)));
-
-								}
-								if (csvRecord.get("Departure station id") == "") {
-									journey.setDepartureStationId(0);
-								} else {
-									journey.setDepartureStationId(
-											Integer.parseInt(csvRecord.get("Departure station id"))); //
-								}
-
-							} catch (NumberFormatException nfe) {
-								System.out.println(nfe.getMessage() + journey.getId() + journey.getArrival());
-							}
-							journeys.add(journey);
-
-						}
-					}
-				} catch (Exception ex) {
-					System.out.println(ex.getMessage());
-				}
-			}
-			return journeys;
-		} catch (IOException e) {
-			throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
-		}
-
+	    return journeys;
 	}
+
 
 	public static List<Asemat> csvToAsemat(InputStream is) throws ParseException {
 		try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
