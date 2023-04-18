@@ -1,5 +1,3 @@
-# HelsinkibikeApp
-
 
 ## API Reference
 
@@ -120,8 +118,60 @@ Creates an asema (Station)
 
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
-| `page |      `number` | **not Required**. page number if empty it returns page 1|
+| `page` |      `number` | **not Required**. page number if empty it returns page 1|
 
 
 ## Journey:
-#### Get all items
+#### Get all items sorted
+
+```http
+  GET /journey/sorted
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `page` |      `number` | **not Required**. page number if empty it returns page 1|
+| `sortedBy` |      `string` | **not Required**. the column to be sorted by|
+
+
+```http
+  GET /journey/search_departure
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` |      `number` | ** Required**. station ID |
+
+```http
+  GET /journey/search_arrival
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `id` |      `number` | ** Required**. station ID |
+
+```http
+  GET /journey/avg_departure
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `idParam` |      `number` | ** Required**. station ID |
+
+```http
+  GET /journey/avg_arrival
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `idParam` |      `number` | ** Required**. station ID |
+
+```http
+  Post /journey/upload
+```
+Description                |
+:------------------------- |
+ | Uploads journeys excel sheets to database |
+
+```http
+  Post /journey/
+```
+Body                |
+:------------------------- |
+ |  the journey that you want to create in JSON format|
