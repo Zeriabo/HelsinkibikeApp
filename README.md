@@ -4,7 +4,7 @@ the backend can be run by docker( docker-compose build,  docker-compose up) or b
 the code was coded on master branch 
 The production version  on prod branch
 
-Front-end React app is in helsinki-bike folder you can run it by npm start
+Front-end React app is in helsinki-bike folder you can run it by npm install and start
 
 helsinkibike Postgresql Database is runned by docker compose  the sql and the Dockerfile is inside db folder you can use pgAdmin to access the db.
 journey table
