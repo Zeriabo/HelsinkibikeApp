@@ -62,7 +62,7 @@ get Station by id
 ```http
   GET /asema/fivereturn
 ```
-* Description: 
+Description: 
 get most five return stations
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -71,7 +71,7 @@ get most five return stations
 ```http
   GET /asema/fivedeparture
 ```
-* Description: 
+Description: 
 get most five departure stations
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -80,7 +80,7 @@ get most five departure stations
 ```http
   GET /asema/totaldeparture
 ```
-* Description:                      
+Description:                      
 get total departure of a certain station
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -89,7 +89,7 @@ get total departure of a certain station
 ```http
   GET /asema/totalarrival
 ```
-* Description:                      
+Description:                      
 get total arrival of a certain station
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -98,7 +98,7 @@ get total arrival of a certain station
 ```http
   POST /asema/upload
 ```
-* Description:                      
+Description:                      
 Uploads the file from resources folder to database
 | Description                       
 |  :-------------------------------- 
