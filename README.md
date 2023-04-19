@@ -1,8 +1,8 @@
 The program fetch the data of the stations and the journeys on startup from the resources folder please place there the follwing files: 2021-05.csv,2021-06.csv,2021-07.csv, Helsingin_ja_Espoon_kaupunkipy_asemat_avoin.csv
 The program upload the files and validates the data and insert them to a database.
 the backend can be run by docker( docker-compose build,  docker-compose up) or by spring-tool-suite. 
-the code was coded on master branch /n
-The code on prod branch
+the code was coded on master branch 
+The production version  on prod branch
 
 ## API Reference
 
