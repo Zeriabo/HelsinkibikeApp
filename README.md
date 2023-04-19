@@ -8,6 +8,7 @@ Front-end React app is in helsinki-bike folder you can run it by npm start
 
 helsinkibike Postgresql Database is runned by docker compose  the sql and the Dockerfile is inside db folder you can use pgAdmin to access the db.
 journey table
+```sql
 CREATE TABLE IF NOT EXISTS public.journey
 (
     id bigint NOT NULL,
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS public.journey
     duration double precision NOT NULL,
     CONSTRAINT journey_pkey PRIMARY KEY (id)
 )
-
+```
 asemat table
 CREATE TABLE IF NOT EXISTS public.asemat
 (
