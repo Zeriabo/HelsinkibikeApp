@@ -194,5 +194,5 @@ private String name;
 	kapasiteet:1,
    x:1.1,
 	 y;1.1
-}|
+}
  |  the journey that you want to create in JSON format|
