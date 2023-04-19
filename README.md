@@ -181,6 +181,18 @@ Description                |
 Description                |
 :------------------------- |
  | create a journey |
-Body                |
-:------------------------- |
+Body :
+{
+private String name;
+  namn:"namn",
+	nimi:"nimi",
+	osoite:"osoite",
+  adres:"adres",
+  kaupunki:"kaupunki",
+  stad:"stad",
+  Operator:"operator",
+	kapasiteet:1,
+   x:1.1,
+	 y;1.1
+}|
  |  the journey that you want to create in JSON format|
