@@ -79,7 +79,7 @@ get Station by capacity
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
-| `capacity`  `number` | id of the station|
+| `capacity`  `number` | capacity value|
 
 ```http
   GET /asema/single
