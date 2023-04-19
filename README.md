@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS public.journey
 )
 ```
 asemat table
+```sql
 CREATE TABLE IF NOT EXISTS public.asemat
 (
     fid bigint NOT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE IF NOT EXISTS public.asemat
     y double precision NOT NULL,
     CONSTRAINT asemat_pkey PRIMARY KEY (fid)
 )
-
+```
 TABLESPACE pg_default;
 
 ## API Reference
