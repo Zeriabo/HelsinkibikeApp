@@ -53,8 +53,8 @@ get Station by id
 ```http
   GET /asema/location
 ```
-* Description:
-get Station Capacity 
+Description: 
+get Station by id
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `idParam` |   `long` | id of the station|
