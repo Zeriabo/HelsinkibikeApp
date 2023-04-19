@@ -5,6 +5,44 @@ the code was coded on master branch
 The production version  on prod branch
 
 Front-end React app is in helsinki-bike folder you can run it by npm start
+
+helsinkibike Postgresql Database is runned by docker compose  the sql and the Dockerfile is inside db folder you can use pgAdmin to access the db.
+journey table
+CREATE TABLE IF NOT EXISTS public.journey
+(
+    id bigint NOT NULL,
+    arrival timestamp(6) without time zone,
+    arrival_station_id integer NOT NULL,
+    arrival_station_name character varying(255) COLLATE pg_catalog."default",
+    covered_distance double precision NOT NULL,
+    departure timestamp(6) without time zone,
+    departure_station_id integer NOT NULL,
+    departure_station_name character varying(255) COLLATE pg_catalog."default",
+    duration double precision NOT NULL,
+    CONSTRAINT journey_pkey PRIMARY KEY (id)
+)
+
+asemat table
+CREATE TABLE IF NOT EXISTS public.asemat
+(
+    fid bigint NOT NULL,
+    operator character varying(255) COLLATE pg_catalog."default",
+    adres character varying(255) COLLATE pg_catalog."default",
+    id bigint,
+    kapasiteet integer NOT NULL,
+    kaupunki character varying(255) COLLATE pg_catalog."default",
+    name character varying(255) COLLATE pg_catalog."default",
+    namn character varying(255) COLLATE pg_catalog."default",
+    nimi character varying(255) COLLATE pg_catalog."default",
+    osoite character varying(255) COLLATE pg_catalog."default",
+    stad character varying(255) COLLATE pg_catalog."default",
+    x double precision NOT NULL,
+    y double precision NOT NULL,
+    CONSTRAINT asemat_pkey PRIMARY KEY (fid)
+)
+
+TABLESPACE pg_default;
+
 ## API Reference
 
 ## Station:
