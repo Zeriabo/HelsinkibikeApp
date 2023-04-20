@@ -62,7 +62,7 @@ public class JourneyController {
 	}
 
 	@GetMapping("/search_departure")
-	public ResponseEntity<Page<Journey>> getSearchByDepartureJourneys(@RequestParam int id, @RequestParam int page) {
+	public ResponseEntity<Page<Journey>> getSearchByDepartureJourneys(@RequestParam int id, @RequestParam(defaultValue = "id") int page) {
 
 		try {
 
@@ -76,7 +76,7 @@ public class JourneyController {
 	}
 
 	@GetMapping("/search_arrival")
-	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam int id, @RequestParam int page) {
+	public ResponseEntity<Page<Journey>> getAllJourneysSearchedByArrival(@RequestParam int id, @RequestParam(defaultValue = "id") int page) {
 
 		try {
 
@@ -121,9 +121,6 @@ public class JourneyController {
 		try {
 
 			File file = resource5.getFile();
-//			File file = new File("src/main/resources/2021-05.csv");
-//			File file2 = new File("src/main/resources/2021-06.csv");
-//			File file3 = new File("src/main/resources/2021-07.csv");
 			File file2 = resource6.getFile();
 			File file3 = resource7.getFile();
 
